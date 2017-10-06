@@ -11,7 +11,7 @@ class getTemperature(object):
 
         self.getData = urllib.urlopen('http://api.openweathermap.org/data/2.5/weather?q=minneapolis,us&APPID=e43c3669282ae317bc20c475813df4b7')
         self.dataToJSON = json.load(self.getData)
-        print dataToJSON['main']['temp']
+        print self.dataToJSON['main']['temp']
 
 class main(object):
 
