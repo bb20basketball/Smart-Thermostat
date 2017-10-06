@@ -1,28 +1,30 @@
-import json
-import urllib
+import time
 
-class getTemperature(object):
-
-    def __init__(self):
-
-        self.update()
-
-    def update(self):
-
-        self.getData = urllib.urlopen('http://api.openweathermap.org/data/2.5/weather?q=minneapolis,us&APPID=e43c3669282ae317bc20c475813df4b7')
-        self.dataToJSON = json.load(self.getData)
-        print self.dataToJSON['main']['temp']
+from getTemperature import GetTemperature
 
 class main(object):
 
     def __init__(self):
         # GPIO stuff
-        pass
+
+        # current thermostat setpoint (in F degrees)
+        self.currentSetpoint = 70
+
+        # temperature API class
+        self.getTemp = GetTemperature()
+        print (self.getTemp.update())
 
     def checkTemp(self):
+        """
+        Checks if thermostat should adjust or not
+        """
+        pass
 
+    def changeTemp(self, setpoint):
+        """
+        Uses the servo to set the temperature on the thermostat
+        """
         pass
 
 if __name__ == "__main__":
-    # just testing for now
-    getTemperature()
+    main()
