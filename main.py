@@ -1,7 +1,7 @@
 import time
 
-from getTemperature import GetTemperature
-from servoControl import ServoControl
+from components.getTemperature import GetTemperature
+from components.servoControl import ServoControl
 
 class main(object):
 
