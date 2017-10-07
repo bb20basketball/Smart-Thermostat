@@ -1,6 +1,7 @@
 import time
 
 from getTemperature import GetTemperature
+from servoControl import ServoControl
 
 class main(object):
 
@@ -12,13 +13,14 @@ class main(object):
 
         # temperature API class
         self.getTemp = GetTemperature()
+        self.servoControl = ServoControl()
         print (self.getTemp.update())
 
     def checkTemp(self):
         """
         Checks if thermostat should adjust or not
         """
-        pass
+        currentTemp = self.getTemp.update()
 
     def changeTemp(self, setpoint):
         """
