@@ -10,7 +10,7 @@ class main(object):
         # GPIO stuff
 
         # current thermostat setpoint (in F degrees)
-        self.currentSetpoint = 74
+        self.currentSetpoint = 70
 
         self.comfortableTemp = 73
 
@@ -41,6 +41,9 @@ class main(object):
         elif currentHour == startHour:
             print 'y'
             self.changeAlgo(currentTemp)
+
+	time.sleep(60)
+	self.checkTemp()
 
         #threading.Timer(60.0, self.checkTemp).start()
 

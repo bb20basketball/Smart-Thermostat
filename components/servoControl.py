@@ -1,10 +1,10 @@
 import RPi.GPIO as GPIO
-import time
+from time import sleep
 
 class ServoControl(object):
 
-    SERVO_UP_PIN = 03
-    SERVO_DOWN_PIN = 05
+    SERVO_UP_PIN = 3
+    SERVO_DOWN_PIN = 5
 
     def __init__(self):
 
@@ -13,15 +13,16 @@ class ServoControl(object):
         self.servoDown = self.addServo(self.SERVO_DOWN_PIN)
 
     def addServo(self, pin):
-
-        GPIO.setup(pin, GPIO.output)
+	print pin
+	print type(pin)
+        GPIO.setup(pin, GPIO.OUT)
 
         servo = GPIO.PWM(pin, 50)
         servo.start(0)
 
         return servo
 
-    def changeUpDown(upDown):
+    def changeUpDown(self, upDown):
 
         if upDown == 'up':
             self.setAngle(90, self.SERVO_UP_PIN, self.servoUp)
@@ -30,11 +31,11 @@ class ServoControl(object):
             self.setAngle(90, self.SERVO_DOWN_PIN, self.servoDown)
             self.setAngle(0, self.SERVO_DOWN_PIN, self.servoDown)
 
-    def setAngle(angle, pin, servo):
+    def setAngle(self, angle, pin, servo):
 
         duty = angle/18 + 2
         GPIO.output(pin, True)
         servo.ChangeDutyCycle(duty)
-        sleep(.1)
+        sleep(2)
         GPIO.output(pin, False)
         servo.ChangeDutyCycle(0)
