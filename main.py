@@ -2,7 +2,7 @@ import time
 import threading
 
 from components.getTemperature import GetTemperature
-#from components.servoControl import ServoControl
+from components.servoControl import ServoControl
 
 class main(object):
 
@@ -10,16 +10,16 @@ class main(object):
         # GPIO stuff
 
         # current thermostat setpoint (in F degrees)
-        self.currentSetpoint = 70
+        self.currentSetpoint = 74
 
         self.comfortableTemp = 73
 
-        self.schedule = {"Sunday": (12,15), "Monday": (8,17), "Tuesday": (8,17),
+        self.schedule = {"Sunday": (12,15), "Monday": (8,22), "Tuesday": (8,17),
          "Wednesday":(8, 17), "Thursday":(8,17), "Friday":(8,17), "Saturday":(11, 22)}
 
         # temperature API class
         self.getTemp = GetTemperature()
-        #self.servoControl = ServoControl()
+        self.servoControl = ServoControl()
         print (self.getTemp.update())
         self.checkTemp()
 
@@ -34,6 +34,7 @@ class main(object):
 
         if currentHour > startHour and currentHour < endHour:
             print 'uyp'
+            self.changeAlgo(currentTemp)
         elif currentHour == endHour:
             print 'yo'
             self.changeTemp(self.comfortableTemp)
@@ -57,9 +58,15 @@ class main(object):
         """
         Uses the servo to set the temperature on the thermostat
         """
-        if setpoint != self.currentSetpoint:
-            self.currentSetpoint = setpoint
-            print "doing servo stuff"
+        while self.currentSetpoint != setpoint:
+            if self.currentSetpoint<setpoint:
+                self.currentSetpoint+=1
+                self.servoControl.changeUpDown('up')
+                print "upping servo"
+            elif self.currentSetpoint>setpoint:
+                self.currentSetpoint-=1
+                self.servoControl.changeUpDown('down')
+                print "downing servo"
 
 if __name__ == "__main__":
     main()
