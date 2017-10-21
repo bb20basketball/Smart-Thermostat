@@ -42,8 +42,8 @@ class main(object):
             print 'y'
             self.changeAlgo(currentTemp)
 
-	time.sleep(60)
-	self.checkTemp()
+	    time.sleep(60)
+	    self.checkTemp()
 
         #threading.Timer(60.0, self.checkTemp).start()
 
@@ -54,6 +54,8 @@ class main(object):
             setTemp = 69
         elif currentTemp > 78:
             setTemp = 78
+        else:
+            setTemp = int(currentTemp)
 
         self.changeTemp(setTemp)
 
